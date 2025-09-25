@@ -1,0 +1,71 @@
+package com.example.api_nosql.service;
+
+import com.example.api_nosql.api.dto.match.MatchRequest;
+import com.example.api_nosql.api.dto.match.MatchResponse;
+import com.example.api_nosql.exception.ExistingMatch;
+import com.example.api_nosql.mapper.MatchMapper;
+import com.example.api_nosql.model.Match;
+import com.example.api_nosql.model.enums.StatusMatch;
+import com.example.api_nosql.repository.MatchRepository;
+import com.example.api_nosql.state.*;
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class MatchService {
+
+    private final MatchRepository matchRepository;
+
+    private final Map<StatusMatch, MatchState> status = Map.of(
+            StatusMatch.ANDAMENTO, new AndamentoState(),
+            StatusMatch.CANCELADO, new CanceladoState(),
+            StatusMatch.CONCLUIDO, new ConcluidoState(),
+            StatusMatch.EM_APROVACAO, new EmAprovacaoState()
+    );
+
+    public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
+        List<Match> list = matchRepository.findByIdSeller(sellerId);
+
+        return list.stream()
+                .filter(match -> match.getStatus() != StatusMatch.CANCELADO && match.getStatus() != StatusMatch.CONCLUIDO)
+                .map(this::fromMatch)
+                .collect(Collectors.toList());
+    }
+
+    public List<MatchResponse> findBySellerId(final Long sellerId){
+        List<Match> list = matchRepository.findByIdSeller(sellerId);
+
+        return list.stream().map(this::fromMatch).collect(Collectors.toList());
+    }
+
+    public void changeStatus(final String chatId, final StatusMatch statusChange){
+        Match match = matchRepository.findByChatId(new ObjectId(chatId)).orElseThrow(() -> new RuntimeException("Match not found"));
+        MatchState state = status.get(match.getStatus());
+        state.changeStatusMatch(match, statusChange);
+        matchRepository.save(match);
+    }
+
+    public MatchResponse save(final MatchRequest matchRequest){
+        Match match = toMatch(matchRequest);
+        if (matchRepository.existsByIdPurchaserAndIdSeller(match.getIdPurchaser(), match.getIdSeller())){
+            throw new ExistingMatch("Match already exists");
+        }
+
+        return fromMatch(matchRepository.save(match));
+    }
+
+    private MatchResponse fromMatch(Match match){
+        return MatchMapper.toMatchResponse(match);
+    }
+
+    private Match toMatch(final MatchRequest request){
+        return MatchMapper.toMatch(request);
+    }
+}
