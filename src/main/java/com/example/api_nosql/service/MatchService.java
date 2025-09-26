@@ -1,13 +1,13 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.dto.match.MatchRequest;
-import com.example.api_nosql.api.dto.match.MatchResponse;
+import com.example.api_nosql.api.match.dto.MatchRequest;
+import com.example.api_nosql.api.match.dto.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
-import com.example.api_nosql.model.Match;
-import com.example.api_nosql.model.enums.StatusMatch;
-import com.example.api_nosql.repository.MatchRepository;
-import com.example.api_nosql.state.*;
+import com.example.api_nosql.persistence.enums.state.*;
+import com.example.api_nosql.persistence.model.Match;
+import com.example.api_nosql.persistence.enums.StatusMatch;
+import com.example.api_nosql.persistence.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;

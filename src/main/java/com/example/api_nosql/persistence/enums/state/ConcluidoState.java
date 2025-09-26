@@ -1,8 +1,8 @@
-package com.example.api_nosql.state;
+package com.example.api_nosql.persistence.enums.state;
 
 import com.example.api_nosql.exception.IlegalStatusChange;
-import com.example.api_nosql.model.Match;
-import com.example.api_nosql.model.enums.StatusMatch;
+import com.example.api_nosql.persistence.model.Match;
+import com.example.api_nosql.persistence.enums.StatusMatch;
 
 public class ConcluidoState implements MatchState {
     @Override

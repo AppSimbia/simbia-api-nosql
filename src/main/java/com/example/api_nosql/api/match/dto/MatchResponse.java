@@ -1,6 +1,6 @@
-package com.example.api_nosql.api.dto.match;
+package com.example.api_nosql.api.match.dto;
 
-import com.example.api_nosql.model.enums.StatusMatch;
+import com.example.api_nosql.persistence.enums.StatusMatch;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

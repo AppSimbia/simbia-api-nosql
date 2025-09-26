@@ -1,18 +1,18 @@
-package com.example.api_nosql.state;
+package com.example.api_nosql.persistence.enums.state;
 
 import com.example.api_nosql.exception.IlegalStatusChange;
-import com.example.api_nosql.model.Match;
-import com.example.api_nosql.model.enums.StatusMatch;
+import com.example.api_nosql.persistence.model.Match;
+import com.example.api_nosql.persistence.enums.StatusMatch;
 
-public class EmAprovacaoState implements MatchState {
+public class AndamentoState implements MatchState {
     @Override
     public StatusMatch getStatusMatch() {
-        return StatusMatch.EM_APROVACAO;
+        return StatusMatch.ANDAMENTO;
     }
 
     @Override
     public void changeStatusMatch(Match match, StatusMatch newStatus) {
-        if  (newStatus == StatusMatch.CANCELADO ||  newStatus == StatusMatch.CONCLUIDO) {
+        if  (newStatus == StatusMatch.CANCELADO ||  newStatus == StatusMatch.EM_APROVACAO) {
             match.setStatus(newStatus);
             return;
         }

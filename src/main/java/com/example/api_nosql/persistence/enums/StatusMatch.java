@@ -1,4 +1,4 @@
-package com.example.api_nosql.model.enums;
+package com.example.api_nosql.persistence.enums;
 
 import lombok.Getter;
 

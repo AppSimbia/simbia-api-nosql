@@ -1,9 +1,8 @@
-package com.example.api_nosql.api;
+package com.example.api_nosql.api.match;
 
-import com.example.api_nosql.api.contract.MatchApi;
-import com.example.api_nosql.api.dto.match.MatchRequest;
-import com.example.api_nosql.api.dto.match.MatchResponse;
-import com.example.api_nosql.model.enums.StatusMatch;
+import com.example.api_nosql.api.match.dto.MatchRequest;
+import com.example.api_nosql.api.match.dto.MatchResponse;
+import com.example.api_nosql.persistence.enums.StatusMatch;
 import com.example.api_nosql.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

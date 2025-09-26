@@ -1,15 +1,13 @@
-package com.example.api_nosql.api.dto.match;
+package com.example.api_nosql.api.match.dto;
 
-import com.example.api_nosql.api.validation.OnCreate;
-import com.example.api_nosql.api.validation.OnUpdate;
+import com.example.api_nosql.validation.OnCreate;
+import com.example.api_nosql.validation.OnUpdate;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
 @Data
 @AllArgsConstructor
-@Validated
 public class MatchRequest {
 
     @NotNull(message = "O ID do Match não pode ser NULL", groups = {OnUpdate.class})

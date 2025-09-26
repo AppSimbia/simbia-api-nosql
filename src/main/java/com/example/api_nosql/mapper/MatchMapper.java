@@ -1,8 +1,8 @@
 package com.example.api_nosql.mapper;
 
-import com.example.api_nosql.api.dto.match.MatchRequest;
-import com.example.api_nosql.api.dto.match.MatchResponse;
-import com.example.api_nosql.model.Match;
+import com.example.api_nosql.api.match.dto.MatchRequest;
+import com.example.api_nosql.api.match.dto.MatchResponse;
+import com.example.api_nosql.persistence.model.Match;
 import org.bson.types.ObjectId;
 
 public class MatchMapper {
