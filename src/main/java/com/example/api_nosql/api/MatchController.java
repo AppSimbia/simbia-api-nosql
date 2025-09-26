@@ -25,6 +25,11 @@ public class MatchController implements MatchApi {
     }
 
     @Override
+    public ResponseEntity<MatchResponse> update(MatchRequest request) {
+        return ResponseEntity.ok(matchService.update(request));
+    }
+
+    @Override
     public ResponseEntity<List<MatchResponse>> findBySellerId(Long id) {
         List<MatchResponse> list = matchService.findBySellerId(id);
 

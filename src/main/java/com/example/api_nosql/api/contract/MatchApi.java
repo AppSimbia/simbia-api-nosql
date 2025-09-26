@@ -2,11 +2,14 @@ package com.example.api_nosql.api.contract;
 
 import com.example.api_nosql.api.dto.match.MatchRequest;
 import com.example.api_nosql.api.dto.match.MatchResponse;
+import com.example.api_nosql.api.validation.OnCreate;
+import com.example.api_nosql.api.validation.OnUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,15 @@ public interface MatchApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided")
     })
     @PostMapping
-    ResponseEntity<MatchResponse> create(@Valid @RequestBody MatchRequest request);
+    ResponseEntity<MatchResponse> create(@Validated({OnCreate.class, Default.class}) @RequestBody MatchRequest request);
+
+    @Operation(summary = "Update a match")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Match successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided")
+    })
+    @PutMapping
+    ResponseEntity<MatchResponse> update(@Validated({OnUpdate.class, Default.class}) @RequestBody MatchRequest request);
 
     @Operation(summary = "List all matchs by seller ID")
     @ApiResponses({
