@@ -1,7 +1,7 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.match.dto.MatchRequest;
-import com.example.api_nosql.api.match.dto.MatchResponse;
+import com.example.api_nosql.api.match.input.MatchRequest;
+import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
 import com.example.api_nosql.persistence.enums.state.*;
@@ -34,14 +34,14 @@ public class MatchService {
 
         return list.stream()
                 .filter(match -> match.getStatus() != StatusMatch.CANCELADO && match.getStatus() != StatusMatch.CONCLUIDO)
-                .map(this::fromMatch)
+                .map(MatchService::fromMatch)
                 .collect(Collectors.toList());
     }
 
     public List<MatchResponse> findBySellerId(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
 
-        return list.stream().map(this::fromMatch).collect(Collectors.toList());
+        return list.stream().map(MatchService::fromMatch).collect(Collectors.toList());
     }
 
     public void changeStatus(final String chatId, final StatusMatch statusChange){
@@ -76,11 +76,11 @@ public class MatchService {
         return fromMatch(matchRepository.save(match));
     }
 
-    private MatchResponse fromMatch(final Match match){
-        return MatchMapper.toMatchResponse(match);
+    private static MatchResponse fromMatch(final Match match){
+        return MatchMapper.toResponse(match);
     }
 
-    private Match toMatch(final MatchRequest request){
-        return MatchMapper.toMatch(request);
+    private static Match toMatch(final MatchRequest request){
+        return MatchMapper.toEntity(request);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.api_nosql.api.match.dto;
+package com.example.api_nosql.api.match.input;
 
 import com.example.api_nosql.validation.OnCreate;
 import com.example.api_nosql.validation.OnUpdate;

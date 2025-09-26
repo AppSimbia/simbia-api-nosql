@@ -1,7 +1,7 @@
 package com.example.api_nosql.api.match;
 
-import com.example.api_nosql.api.match.dto.MatchRequest;
-import com.example.api_nosql.api.match.dto.MatchResponse;
+import com.example.api_nosql.api.match.input.MatchRequest;
+import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.persistence.enums.StatusMatch;
 import com.example.api_nosql.service.MatchService;
 import lombok.RequiredArgsConstructor;

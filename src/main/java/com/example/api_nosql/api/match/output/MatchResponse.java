@@ -1,4 +1,4 @@
-package com.example.api_nosql.api.match.dto;
+package com.example.api_nosql.api.match.output;
 
 import com.example.api_nosql.persistence.enums.StatusMatch;
 import lombok.AllArgsConstructor;
