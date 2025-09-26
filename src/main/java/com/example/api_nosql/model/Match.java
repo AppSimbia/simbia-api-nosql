@@ -22,8 +22,7 @@ public class Match {
     private ObjectId idPost;
     private Long idPurchaser;
     private Long idSeller;
-    @Builder.Default
-    private ObjectId idChat = new ObjectId();
+    private ObjectId idChat;
     @Builder.Default
     private StatusMatch status = StatusMatch.ANDAMENTO;
 

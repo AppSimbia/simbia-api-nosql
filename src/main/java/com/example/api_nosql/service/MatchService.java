@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,16 +51,32 @@ public class MatchService {
         matchRepository.save(match);
     }
 
+    private void changeStatus(final String idMatch){
+        Match match = matchRepository.findById(new ObjectId(idMatch)).orElseThrow(() -> new RuntimeException("Match not found"));
+        MatchState state = status.get(match.getStatus());
+        state.changeStatusMatch(match, StatusMatch.CANCELADO);
+        matchRepository.save(match);
+    }
+
     public MatchResponse save(final MatchRequest matchRequest){
         Match match = toMatch(matchRequest);
-        if (matchRepository.existsByIdPurchaserAndIdSeller(match.getIdPurchaser(), match.getIdSeller())){
+        return fromMatch(matchRepository.save(match));
+    }
+
+    public MatchResponse update(final MatchRequest matchRequest){
+        Match match = matchRepository.findById(new ObjectId(matchRequest.getId())).orElseThrow(() -> new RuntimeException("Match not found"));
+        if (matchRepository.existsMatch(
+                matchRequest.getIdPurchaser(), matchRequest.getIdSeller(), new ObjectId(matchRequest.getIdPost()), StatusMatch.CANCELADO.getStatus())) {
+            changeStatus(matchRequest.getId());
             throw new ExistingMatch("Match already exists");
         }
+        match.setIdSeller(matchRequest.getIdSeller());
+        match.setIdChat(new ObjectId());
 
         return fromMatch(matchRepository.save(match));
     }
 
-    private MatchResponse fromMatch(Match match){
+    private MatchResponse fromMatch(final Match match){
         return MatchMapper.toMatchResponse(match);
     }
 

@@ -16,6 +16,7 @@ public interface MatchRepository extends MongoRepository<Match, ObjectId> {
     @Query("{ 'idChat' :  ?0}")
     Optional<Match> findByChatId(ObjectId chatId);
 
-    Boolean existsByIdPurchaserAndIdSeller(Long idPurchaser, Long sellerId);
+    @Query("{ 'idPurchaser' : ?0, 'idSeller' : ?1, 'idPost' : ?2, 'status' :  { $ne :  ?3 }}")
+    Boolean existsMatch(Long idPurchaser, Long idSeller, ObjectId idPost, String status);
 
 }

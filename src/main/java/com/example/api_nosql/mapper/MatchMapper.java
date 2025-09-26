@@ -12,8 +12,8 @@ public class MatchMapper {
                 .id(match.getId().toString())
                 .idPost(match.getIdPost().toString())
                 .idPurchaser(match.getIdPurchaser())
-                .idSeller(match.getIdSeller())
-                .idChat(match.getIdChat().toString())
+                .idSeller(match.getIdSeller() != null ? match.getIdSeller() : null)
+                .idChat(match.getIdChat() != null ? match.getIdChat().toString() : null)
                 .status(match.getStatus())
                 .build();
     }
@@ -22,7 +22,7 @@ public class MatchMapper {
         return Match.builder()
                 .idPost(new ObjectId(matchRequest.getIdPost()))
                 .idPurchaser(matchRequest.getIdPurchaser())
-                .idSeller(matchRequest.getIdSeller())
+                .idSeller(matchRequest.getIdSeller() != null ? matchRequest.getIdSeller() : null)
                 .build();
     }
 
