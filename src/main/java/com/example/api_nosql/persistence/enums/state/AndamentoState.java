@@ -12,7 +12,7 @@ public class AndamentoState implements MatchState {
 
     @Override
     public void changeStatusMatch(Match match, StatusMatch newStatus) {
-        if  (newStatus == StatusMatch.CANCELADO ||  newStatus == StatusMatch.EM_APROVACAO) {
+        if  (newStatus == StatusMatch.CANCELADO) {
             match.setStatus(newStatus);
             return;
         }

@@ -30,7 +30,7 @@ public class Desafio {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public class Solucao {
+    public static class Solucao {
 
         private Long idFuncionarioResposta;
         private String titulo;
