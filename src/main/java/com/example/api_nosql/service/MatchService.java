@@ -4,7 +4,6 @@ import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
-import com.example.api_nosql.persistence.entity.Chat;
 import com.example.api_nosql.persistence.entity.Match;
 import com.example.api_nosql.persistence.enums.StatusMatch;
 import com.example.api_nosql.persistence.enums.state.*;
@@ -28,7 +27,10 @@ public class MatchService {
             StatusMatch.ANDAMENTO, new AndamentoState(),
             StatusMatch.CANCELADO, new CanceladoState(),
             StatusMatch.CONCLUIDO, new ConcluidoState(),
-            StatusMatch.AGUARDANDO_APROVACAO_CRIAÇÃO, new AguardandoAprovacaoCriacaoState()
+            StatusMatch.AGUARDANDO_APROVACAO_CRIACAO, new AguardandoAprovacaoCriacaoState(),
+            StatusMatch.AGUARDANDO_APROVACAO_FECHAMENTO, new AguardandoAprovacaoFechamentoState(),
+            StatusMatch.AGUARDANDO_PAGAMENTO, new AguardandoPagamentoState(),
+            StatusMatch.AGUARDANDO_SOLICITACAO_FECHAMENTO, new AguardandoSolicitacaoFechamentoState()
     );
 
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
