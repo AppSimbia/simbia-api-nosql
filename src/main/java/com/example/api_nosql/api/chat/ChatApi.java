@@ -1,5 +1,6 @@
 package com.example.api_nosql.api.chat;
 
+import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -29,6 +30,7 @@ public interface ChatApi {
             @ApiResponse(responseCode = "200", description = "Message sent successfully."),
             @ApiResponse(responseCode = "400", description = "Invalidated data provided.")
     })
-    @PostMapping("/create")
-    ResponseEntity<List<ChatResponse>> create(@Valid @RequestBody );
+    @PostMapping("/send")
+    ResponseEntity<List<ChatResponse>> sendMessage(@Valid @RequestBody MessageRequest request);
+
 }

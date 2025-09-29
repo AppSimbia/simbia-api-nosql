@@ -1,4 +1,4 @@
-package com.example.api_nosql.persistence.model;
+package com.example.api_nosql.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,12 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document("chats")
+@Document(collection = "chats")
 public class Chat {
 
     @Id
     private ObjectId id;
-    private ObjectId matchId;
+    private ObjectId idMatch;
     private List<Message> messages;
 
 }

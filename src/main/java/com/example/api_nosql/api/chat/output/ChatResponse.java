@@ -1,6 +1,6 @@
 package com.example.api_nosql.api.chat.output;
 
-import com.example.api_nosql.persistence.model.Message;
+import com.example.api_nosql.persistence.entity.Message;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
