@@ -28,7 +28,7 @@ public class MatchService {
             StatusMatch.ANDAMENTO, new AndamentoState(),
             StatusMatch.CANCELADO, new CanceladoState(),
             StatusMatch.CONCLUIDO, new ConcluidoState(),
-            StatusMatch.EM_APROVACAO, new EmAprovacaoState()
+            StatusMatch.AGUARDANDO_APROVACAO_CRIAÇÃO, new AguardandoAprovacaoCriacaoState()
     );
 
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
@@ -72,12 +72,12 @@ public class MatchService {
             changeStatus(matchRequest.getId());
             throw new ExistingMatch("Match already exists");
         }
-        Chat newChat = chatService.save(Chat.builder()
-                .id(new ObjectId())
-                .idMatch(match.getId())
-                .build());
+//        Chat newChat = chatService.save(Chat.builder()
+//                .id(new ObjectId())
+//                .idMatch(match.getId())
+//                .build());
         match.setIdSeller(matchRequest.getIdSeller());
-        match.setIdChat(newChat.getId());
+//        match.setIdChat(newChat.getId());
 
         return fromMatch(matchRepository.save(match));
     }

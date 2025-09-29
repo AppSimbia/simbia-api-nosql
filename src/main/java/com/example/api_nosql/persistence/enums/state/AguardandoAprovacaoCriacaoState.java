@@ -4,10 +4,10 @@ import com.example.api_nosql.exception.IlegalStatusChange;
 import com.example.api_nosql.persistence.entity.Match;
 import com.example.api_nosql.persistence.enums.StatusMatch;
 
-public class EmAprovacaoState implements MatchState {
+public class AguardandoAprovacaoCriacaoState implements MatchState {
     @Override
     public StatusMatch getStatusMatch() {
-        return StatusMatch.EM_APROVACAO;
+        return StatusMatch.AGUARDANDO_APROVACAO_CRIAÇÃO;
     }
 
     @Override
