@@ -1,13 +1,14 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.dto.match.MatchRequest;
-import com.example.api_nosql.api.dto.match.MatchResponse;
+import com.example.api_nosql.api.match.input.MatchRequest;
+import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
-import com.example.api_nosql.model.Match;
-import com.example.api_nosql.model.enums.StatusMatch;
-import com.example.api_nosql.repository.MatchRepository;
-import com.example.api_nosql.state.*;
+import com.example.api_nosql.persistence.entity.Chat;
+import com.example.api_nosql.persistence.entity.Match;
+import com.example.api_nosql.persistence.enums.StatusMatch;
+import com.example.api_nosql.persistence.enums.state.*;
+import com.example.api_nosql.persistence.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,13 @@ import java.util.stream.Collectors;
 public class MatchService {
 
     private final MatchRepository matchRepository;
+    private final ChatService chatService;
 
     private final Map<StatusMatch, MatchState> status = Map.of(
             StatusMatch.ANDAMENTO, new AndamentoState(),
             StatusMatch.CANCELADO, new CanceladoState(),
             StatusMatch.CONCLUIDO, new ConcluidoState(),
-            StatusMatch.EM_APROVACAO, new EmAprovacaoState()
+            StatusMatch.AGUARDANDO_APROVACAO_CRIAÇÃO, new AguardandoAprovacaoCriacaoState()
     );
 
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
@@ -34,14 +36,14 @@ public class MatchService {
 
         return list.stream()
                 .filter(match -> match.getStatus() != StatusMatch.CANCELADO && match.getStatus() != StatusMatch.CONCLUIDO)
-                .map(this::fromMatch)
+                .map(MatchService::fromMatch)
                 .collect(Collectors.toList());
     }
 
     public List<MatchResponse> findBySellerId(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
 
-        return list.stream().map(this::fromMatch).collect(Collectors.toList());
+        return list.stream().map(MatchService::fromMatch).collect(Collectors.toList());
     }
 
     public void changeStatus(final String chatId, final StatusMatch statusChange){
@@ -70,17 +72,21 @@ public class MatchService {
             changeStatus(matchRequest.getId());
             throw new ExistingMatch("Match already exists");
         }
+//        Chat newChat = chatService.save(Chat.builder()
+//                .id(new ObjectId())
+//                .idMatch(match.getId())
+//                .build());
         match.setIdSeller(matchRequest.getIdSeller());
-        match.setIdChat(new ObjectId());
+//        match.setIdChat(newChat.getId());
 
         return fromMatch(matchRepository.save(match));
     }
 
-    private MatchResponse fromMatch(final Match match){
-        return MatchMapper.toMatchResponse(match);
+    private static MatchResponse fromMatch(final Match match){
+        return MatchMapper.toResponse(match);
     }
 
-    private Match toMatch(final MatchRequest request){
-        return MatchMapper.toMatch(request);
+    private static Match toMatch(final MatchRequest request){
+        return MatchMapper.toEntity(request);
     }
 }
