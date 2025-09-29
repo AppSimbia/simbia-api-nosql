@@ -4,9 +4,10 @@ import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
-import com.example.api_nosql.persistence.enums.state.*;
-import com.example.api_nosql.persistence.model.Match;
+import com.example.api_nosql.persistence.entity.Chat;
+import com.example.api_nosql.persistence.entity.Match;
 import com.example.api_nosql.persistence.enums.StatusMatch;
+import com.example.api_nosql.persistence.enums.state.*;
 import com.example.api_nosql.persistence.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class MatchService {
 
     private final MatchRepository matchRepository;
+    private final ChatService chatService;
 
     private final Map<StatusMatch, MatchState> status = Map.of(
             StatusMatch.ANDAMENTO, new AndamentoState(),
@@ -70,8 +72,12 @@ public class MatchService {
             changeStatus(matchRequest.getId());
             throw new ExistingMatch("Match already exists");
         }
+        Chat newChat = chatService.save(Chat.builder()
+                .id(new ObjectId())
+                .idMatch(match.getId())
+                .build());
         match.setIdSeller(matchRequest.getIdSeller());
-        match.setIdChat(new ObjectId());
+        match.setIdChat(newChat.getId());
 
         return fromMatch(matchRepository.save(match));
     }

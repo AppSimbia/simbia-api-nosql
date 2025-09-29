@@ -2,7 +2,7 @@ package com.example.api_nosql.mapper;
 
 import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
-import com.example.api_nosql.persistence.model.Match;
+import com.example.api_nosql.persistence.entity.Match;
 import org.bson.types.ObjectId;
 
 public class MatchMapper {

@@ -1,4 +1,4 @@
-package com.example.api_nosql.persistence.model;
+package com.example.api_nosql.persistence.entity;
 
 import com.example.api_nosql.persistence.enums.StatusMatch;
 import lombok.AllArgsConstructor;
