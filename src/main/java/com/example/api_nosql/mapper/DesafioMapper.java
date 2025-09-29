@@ -3,7 +3,7 @@ package com.example.api_nosql.mapper;
 import com.example.api_nosql.api.desafio.input.DesafioRequest;
 import com.example.api_nosql.api.desafio.input.SolucaoRequest;
 import com.example.api_nosql.api.desafio.output.DesafioResponse;
-import com.example.api_nosql.persistence.model.Desafio;
+import com.example.api_nosql.persistence.entity.Desafio;
 
 public class DesafioMapper {
 

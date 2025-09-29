@@ -27,7 +27,7 @@ public class DesafioController implements DesafioApi {
     }
 
     @Override
-    public ResponseEntity<DesafioResponse> createSolution(SolucaoRequest request) {
+    public ResponseEntity<DesafioResponse> createSolution(SolucaoRequest request, String idDesafio) {
         return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.api_nosql.persistence.model;
+package com.example.api_nosql.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

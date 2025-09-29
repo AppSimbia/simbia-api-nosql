@@ -1,6 +1,6 @@
 package com.example.api_nosql.api.desafio.output;
 
-import com.example.api_nosql.persistence.model.Desafio;
+import com.example.api_nosql.persistence.entity.Desafio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
