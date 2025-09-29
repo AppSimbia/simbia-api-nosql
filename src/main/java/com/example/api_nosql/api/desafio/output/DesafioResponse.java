@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 public class DesafioResponse {
 
+    private String id;
     private Long idFuncionarioPergunta;
     private String titulo;
     private String texto;

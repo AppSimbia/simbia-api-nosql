@@ -18,16 +18,18 @@ public class DesafioController implements DesafioApi {
 
     @Override
     public ResponseEntity<DesafioResponse> create(DesafioRequest request) {
-        return null;
+        return ResponseEntity.ok(desafioService.create(request));
     }
 
     @Override
     public ResponseEntity<List<DesafioResponse>> findByEmployeeId(Long id) {
-        return null;
+        List<DesafioResponse> list = desafioService.findByEmployeeId(id);
+
+        return list.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(list);
     }
 
     @Override
     public ResponseEntity<DesafioResponse> createSolution(SolucaoRequest request, String idDesafio) {
-        return null;
+        return ResponseEntity.ok(desafioService.createSolucao(request,idDesafio));
     }
 }
