@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface DesafioRepository extends MongoRepository<Desafio, ObjectId> {
 
-    List<Desafio> findByEmployeeId(Long id);
+    List<Desafio> findByIdFuncionarioPergunta(Long id);
 
 }

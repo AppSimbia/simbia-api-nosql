@@ -20,7 +20,7 @@ public class DesafioService {
     private final DesafioRepository repository;
 
     public List<DesafioResponse> findByEmployeeId(final Long id) {
-        List<Desafio> list = repository.findByEmployeeId(id);
+        List<Desafio> list = repository.findByIdFuncionarioPergunta(id);
         return list.stream().map(DesafioService::fromDesafio).collect(Collectors.toList());
     }
 
