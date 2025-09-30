@@ -9,6 +9,7 @@ public class DesafioMapper {
 
     public static DesafioResponse toResponse(final Desafio desafio){
         return DesafioResponse.builder()
+                .id(desafio.getId().toString())
                 .idFuncionarioPergunta(desafio.getIdFuncionarioPergunta())
                 .titulo(desafio.getTitulo())
                 .texto(desafio.getTexto())

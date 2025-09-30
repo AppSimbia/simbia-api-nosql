@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DesafioRequest {
 
-    @NotBlank(message = "O ID do Funcionário não pode ser vazio.")
     @Min(1)
     private Long idFuncionarioPergunta;
     @NotBlank(message = "O titulo da pergunta não pode ser vazio.")
