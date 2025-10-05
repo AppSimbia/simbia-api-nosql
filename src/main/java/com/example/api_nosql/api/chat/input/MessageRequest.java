@@ -1,9 +1,9 @@
 package com.example.api_nosql.api.chat.input;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -11,5 +11,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MessageRequest {
 
-    private String message;
+    @NotBlank(message = "A mensagem não pode ser vazia")
+    private String mensagem;
+
+    @NotBlank(message = "O id do funcionário é obrigatório")
+    private String idFuncionario;
+
+    @NotBlank(message = "O id do chat é obrigatório")
+    private String chatId;
+
+    @Builder.Default
+    @NotNull(message = "A data de criação não deve ser nula")
+    private Instant createdAt = Instant.now();
 }

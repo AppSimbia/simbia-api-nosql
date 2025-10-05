@@ -1,11 +1,7 @@
 package com.example.api_nosql.api.chat.output;
 
 import com.example.api_nosql.persistence.entity.Message;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.util.List;
 
 @Data
@@ -13,9 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ChatResponse {
-
     private String id;
     private String matchId;
-    private List<Message> messages;
-
+    private List<Message> mensagens;
 }
