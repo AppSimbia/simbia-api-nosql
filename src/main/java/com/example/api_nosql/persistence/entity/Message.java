@@ -1,20 +1,21 @@
 package com.example.api_nosql.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Message {
-
-    private Long idEmployee;
-    private String text;
-    private LocalDateTime dateTime;
-
+    private String id;
+    private String chatId;
+    private String idFuncionario;
+    private String mensagem;
+    private Instant createdAt;
+    private boolean read = false;
 }
+
