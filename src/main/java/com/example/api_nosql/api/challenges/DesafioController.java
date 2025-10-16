@@ -1,8 +1,8 @@
-package com.example.api_nosql.api.desafio;
+package com.example.api_nosql.api.challenges;
 
-import com.example.api_nosql.api.desafio.input.DesafioRequest;
-import com.example.api_nosql.api.desafio.input.SolucaoRequest;
-import com.example.api_nosql.api.desafio.output.DesafioResponse;
+import com.example.api_nosql.api.challenges.input.DesafioRequest;
+import com.example.api_nosql.api.challenges.input.SolucaoRequest;
+import com.example.api_nosql.api.challenges.output.DesafioResponse;
 import com.example.api_nosql.service.DesafioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

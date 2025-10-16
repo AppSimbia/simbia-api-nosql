@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class ChatRequestDto {
 
     @NotBlank(message = "O id do match é obrigatório")
-    private String matchId;
+    private String idMatch;
 }

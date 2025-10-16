@@ -18,7 +18,7 @@ public class RedisMessageSubscriber {
     public void onMessage(String message, String channel) {
         try {
             MessageRequest dto = objectMapper.readValue(message, MessageRequest.class);
-            messagingTemplate.convertAndSend("/topic/chat." + dto.getChatId(), dto);
+            messagingTemplate.convertAndSend("/topic/chat." + dto.getIdChat(), dto);
         } catch (Exception e) {
             throw new RuntimeException("Could not deserialize Redis message", e);
         }

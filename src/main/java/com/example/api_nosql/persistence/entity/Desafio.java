@@ -15,16 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document("desafios")
+@Document("challenges")
 public class Desafio {
 
     @Id
     private ObjectId id;
-    private Long idFuncionarioPergunta;
-    private String titulo;
-    private String texto;
+    private Long idEmployeeQuestion;
+    private String title;
+    private String text;
     @Builder.Default
-    private List<Solucao> solucoes =  new ArrayList<>();
+    private List<Solucao> solutions =  new ArrayList<>();
 
     @Data
     @AllArgsConstructor
@@ -32,9 +32,9 @@ public class Desafio {
     @Builder
     public static class Solucao {
 
-        private Long idFuncionarioResposta;
-        private String titulo;
-        private String texto;
+        private Long idEmployeeSolution;
+        private String title;
+        private String text;
 
     }
 

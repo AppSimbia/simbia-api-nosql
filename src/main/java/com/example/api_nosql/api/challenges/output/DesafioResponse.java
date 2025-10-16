@@ -1,4 +1,4 @@
-package com.example.api_nosql.api.desafio.output;
+package com.example.api_nosql.api.challenges.output;
 
 import com.example.api_nosql.persistence.entity.Desafio;
 import lombok.AllArgsConstructor;
@@ -15,9 +15,9 @@ import java.util.List;
 public class DesafioResponse {
 
     private String id;
-    private Long idFuncionarioPergunta;
-    private String titulo;
-    private String texto;
-    private List<Desafio.Solucao> solucoes;
+    private Long idEmployeeQuestion;
+    private String title;
+    private String text;
+    private List<Desafio.Solucao> solutions;
 
 }

@@ -23,7 +23,7 @@ public class ChatService {
 
     public ChatResponse createChat(ChatRequestDto dto) {
         Chat chat = Chat.builder()
-                .matchId(dto.getMatchId())
+                .idMatch(dto.getIdMatch())
                 .build();
         return toResponse(chatRepository.save(chat));
     }
@@ -45,12 +45,12 @@ public class ChatService {
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado: " + chatId));
 
         Message message = Message.builder()
-                .idFuncionario(messageRequest.getIdFuncionario())
-                .mensagem(messageRequest.getMensagem())
+                .idEmployee(messageRequest.getIdEmployee())
+                .message(messageRequest.getMessage())
                 .createdAt(Instant.now())
                 .build();
 
-        chat.getMensagens().add(message);
+        chat.getMessages().add(message);
         chatRepository.save(chat);
 
         redisMessagePublisher.publish("chat." + chatId, message);
@@ -65,8 +65,8 @@ public class ChatService {
     private ChatResponse toResponse(Chat chat) {
         return ChatResponse.builder()
                 .id(chat.getId())
-                .matchId(chat.getMatchId())
-                .mensagens(chat.getMensagens())
+                .idMatch(chat.getIdMatch())
+                .messages(chat.getMessages())
                 .build();
     }
 }

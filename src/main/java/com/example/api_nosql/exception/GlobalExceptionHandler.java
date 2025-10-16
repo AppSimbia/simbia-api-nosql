@@ -1,7 +1,5 @@
-package com.example.api_nosql.api;
+package com.example.api_nosql.exception;
 
-import com.example.api_nosql.exception.ExistingMatch;
-import com.example.api_nosql.exception.IlegalStatusChange;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
