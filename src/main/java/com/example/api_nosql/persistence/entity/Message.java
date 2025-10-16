@@ -1,8 +1,9 @@
 package com.example.api_nosql.persistence.entity;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
@@ -12,9 +13,9 @@ import java.time.Instant;
 @Builder
 public class Message {
     private String id;
-    private String chatId;
-    private String idFuncionario;
-    private String mensagem;
+    private String idChat;
+    private String idEmployee;
+    private String message;
     private Instant createdAt;
     private boolean read = false;
 }

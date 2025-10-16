@@ -1,4 +1,4 @@
-package com.example.api_nosql.api.desafio.input;
+package com.example.api_nosql.api.challenges.input;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class DesafioRequest {
 
     @Min(1)
-    private Long idFuncionarioPergunta;
+    private Long idEmployeeQuestion;
     @NotBlank(message = "O titulo da pergunta não pode ser vazio.")
-    private String titulo;
-    private String texto;
+    private String title;
+    private String text;
 
 }

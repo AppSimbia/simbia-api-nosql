@@ -15,11 +15,11 @@ public class Chat {
     @Id
     private String id;
 
-    private String matchId;
+    private String idMatch;
 
     @Builder.Default
     private List<String> participants = new ArrayList<>();
 
     @Builder.Default
-    private List<Message> mensagens = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 }

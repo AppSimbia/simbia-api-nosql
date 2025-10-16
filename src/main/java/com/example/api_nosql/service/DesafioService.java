@@ -1,8 +1,8 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.desafio.input.DesafioRequest;
-import com.example.api_nosql.api.desafio.input.SolucaoRequest;
-import com.example.api_nosql.api.desafio.output.DesafioResponse;
+import com.example.api_nosql.api.challenges.input.DesafioRequest;
+import com.example.api_nosql.api.challenges.input.SolucaoRequest;
+import com.example.api_nosql.api.challenges.output.DesafioResponse;
 import com.example.api_nosql.mapper.DesafioMapper;
 import com.example.api_nosql.persistence.entity.Desafio;
 import com.example.api_nosql.persistence.repository.DesafioRepository;
@@ -20,7 +20,7 @@ public class DesafioService {
     private final DesafioRepository repository;
 
     public List<DesafioResponse> findByEmployeeId(final Long id) {
-        List<Desafio> list = repository.findByIdFuncionarioPergunta(id);
+        List<Desafio> list = repository.findByIdEmployeeQuestion(id);
         return list.stream().map(DesafioService::fromDesafio).collect(Collectors.toList());
     }
 
@@ -31,7 +31,7 @@ public class DesafioService {
 
     public DesafioResponse createSolucao(final SolucaoRequest solucaoRequest, final String idDesafio) {
         Desafio desafio = repository.findById(new ObjectId(idDesafio)).orElseThrow(() -> new RuntimeException("Desafio not found"));
-        desafio.getSolucoes().addLast(toSolucao(solucaoRequest));
+        desafio.getSolutions().addLast(toSolucao(solucaoRequest));
         return fromDesafio(repository.save(desafio));
     }
 

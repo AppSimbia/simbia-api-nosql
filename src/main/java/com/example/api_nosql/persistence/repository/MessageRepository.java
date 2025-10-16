@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends MongoRepository<Message, String> {
 
-    List<Message> findByChatIdOrderByCreatedAtDesc(String chatId);
+    List<Message> findByIdChatOrderByCreatedAtDesc(String chatId);
 
-    long countByChatIdAndIdFuncionarioNotAndReadFalse(String chatId, String idFuncionario);
+    long countByIdChatAndIdEmployeeNotAndReadFalse(String chatId, String idEmployee);
 }

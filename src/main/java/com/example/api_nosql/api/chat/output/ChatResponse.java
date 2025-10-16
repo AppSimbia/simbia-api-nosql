@@ -10,6 +10,6 @@ import java.util.List;
 @Builder
 public class ChatResponse {
     private String id;
-    private String matchId;
-    private List<Message> mensagens;
+    private String idMatch;
+    private List<Message> messages;
 }
