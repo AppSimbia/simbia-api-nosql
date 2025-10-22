@@ -1,6 +1,6 @@
 package com.example.api_nosql.persistence.entity;
 
-import com.example.api_nosql.persistence.enums.StatusMatch;
+import com.example.api_nosql.persistence.enums.MatchState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +19,16 @@ public class Match {
     @Id
     @Builder.Default
     private ObjectId id =  new ObjectId();
-    private ObjectId idPost;
-    private Long idPurchaser;
-    private Long idSeller;
-    private ObjectId idChat;
+    private Long idPost;
+    private Long idEmployeePurchaser;
+    private Long idEmployeeSeller;
+    private String idIndustryPurchaser;
+    private String idIndustrySeller;
+    private Double proposedValue;
+    private Long quantity;
+    private Long measureUnit;
+    private String idChat;
     @Builder.Default
-    private StatusMatch status = StatusMatch.ANDAMENTO;
+    private MatchState status = MatchState.AGUARDANDO_APROVACAO_CRIACAO;
 
 }

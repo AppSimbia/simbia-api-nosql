@@ -1,19 +1,20 @@
 package com.example.api_nosql.service;
 
+import com.example.api_nosql.api.chat.input.ChatRequestDto;
+import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
 import com.example.api_nosql.persistence.entity.Match;
-import com.example.api_nosql.persistence.enums.StatusMatch;
-import com.example.api_nosql.persistence.enums.state.*;
+import com.example.api_nosql.persistence.enums.MatchContext;
+import com.example.api_nosql.persistence.enums.MatchState;
 import com.example.api_nosql.persistence.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,21 +24,11 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final ChatService chatService;
 
-    private final Map<StatusMatch, MatchState> status = Map.of(
-            StatusMatch.ANDAMENTO, new AndamentoState(),
-            StatusMatch.CANCELADO, new CanceladoState(),
-            StatusMatch.CONCLUIDO, new ConcluidoState(),
-            StatusMatch.AGUARDANDO_APROVACAO_CRIACAO, new AguardandoAprovacaoCriacaoState(),
-            StatusMatch.AGUARDANDO_APROVACAO_FECHAMENTO, new AguardandoAprovacaoFechamentoState(),
-            StatusMatch.AGUARDANDO_PAGAMENTO, new AguardandoPagamentoState(),
-            StatusMatch.AGUARDANDO_SOLICITACAO_FECHAMENTO, new AguardandoSolicitacaoFechamentoState()
-    );
-
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
 
         return list.stream()
-                .filter(match -> match.getStatus() != StatusMatch.CANCELADO && match.getStatus() != StatusMatch.CONCLUIDO)
+                .filter(match -> match.getStatus() != MatchState.CANCELADO && match.getStatus() != MatchState.CONCLUIDO)
                 .map(MatchService::fromMatch)
                 .collect(Collectors.toList());
     }
@@ -48,38 +39,40 @@ public class MatchService {
         return list.stream().map(MatchService::fromMatch).collect(Collectors.toList());
     }
 
-    public void changeStatus(final String chatId, final StatusMatch statusChange){
-        Match match = matchRepository.findByChatId(new ObjectId(chatId)).orElseThrow(() -> new RuntimeException("Match not found"));
-        MatchState state = status.get(match.getStatus());
-        state.changeStatusMatch(match, statusChange);
+    public String changeStatus(final String id, MatchRequest request) {
+        Match match = matchRepository.findById(new ObjectId(id)).orElseThrow(() -> new RuntimeException("Match not found"));
+        MatchContext matchContext = new MatchContext(match.getStatus());
+        matchContext.next();
+
+        if (matchContext.getState() == MatchState.ANDAMENTO) {
+            ChatResponse chat = chatService.createChat(new ChatRequestDto(match.getId().toString()));
+            match.setIdChat(chat.getId());
+            match.setIdEmployeeSeller(request.getIdEmployeeSeller());
+            match.setIdIndustrySeller(request.getIdIndustrySeller());
+        }else if (matchContext.getState() == MatchState.AGUARDANDO_PAGAMENTO) {
+            match.setProposedValue(request.getProposedValue());
+            match.setQuantity(request.getQuantity());
+            match.setMeasureUnit(request.getMeasureUnit());
+        }
+
+        match.setStatus(matchContext.getState());
         matchRepository.save(match);
+        return matchContext.getState().getStatus();
     }
 
-    private void changeStatus(final String idMatch){
-        Match match = matchRepository.findById(new ObjectId(idMatch)).orElseThrow(() -> new RuntimeException("Match not found"));
-        MatchState state = status.get(match.getStatus());
-        state.changeStatusMatch(match, StatusMatch.CANCELADO);
+    public void changeStatus(final String id) {
+        Match match = matchRepository.findById(new ObjectId(id)).orElseThrow(() -> new RuntimeException("Match not found"));
+        match.setStatus(MatchState.CANCELADO);
         matchRepository.save(match);
     }
 
     public MatchResponse save(final MatchRequest matchRequest){
         Match match = toMatch(matchRequest);
-        return fromMatch(matchRepository.save(match));
-    }
 
-    public MatchResponse update(final MatchRequest matchRequest){
-        Match match = matchRepository.findById(new ObjectId(matchRequest.getId())).orElseThrow(() -> new RuntimeException("Match not found"));
         if (matchRepository.existsMatch(
-                matchRequest.getIdPurchaser(), matchRequest.getIdSeller(), new ObjectId(matchRequest.getIdPost()), StatusMatch.CANCELADO.getStatus())) {
-            changeStatus(matchRequest.getId());
+                matchRequest.getIdIndustryPurchaser(), matchRequest.getIdPost(), MatchState.CANCELADO.getStatus())) {
             throw new ExistingMatch("Match already exists");
         }
-//        Chat newChat = chatService.save(Chat.builder()
-//                .id(new ObjectId())
-//                .idMatch(match.getId())
-//                .build());
-        match.setIdSeller(matchRequest.getIdSeller());
-//        match.setIdChat(newChat.getId());
 
         return fromMatch(matchRepository.save(match));
     }
