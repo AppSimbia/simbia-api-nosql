@@ -9,6 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,5 +32,7 @@ public class Match {
     private String idChat;
     @Builder.Default
     private MatchState status = MatchState.AGUARDANDO_APROVACAO_CRIACAO;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }
