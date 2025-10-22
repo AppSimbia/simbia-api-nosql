@@ -1,6 +1,6 @@
 package com.example.api_nosql.api.match.output;
 
-import com.example.api_nosql.persistence.enums.StatusMatch;
+import com.example.api_nosql.persistence.enums.MatchState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +11,15 @@ import lombok.Data;
 public class MatchResponse {
 
     private String id;
-    private String idPost;
-    private Long idPurchaser;
-    private Long idSeller;
+    private Long idPost;
+    private Long idEmployeePurchaser;
+    private Long idEmployeeSeller;
+    private String idIndustryPurchaser;
+    private String idIndustrySeller;
     private String idChat;
-    private StatusMatch status;
+    private Double proposedValue;
+    private Long quantity;
+    private Long measureUnit;
+    private MatchState status;
 
 }
