@@ -4,6 +4,7 @@ import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
+import com.example.api_nosql.config.redis.RedisMessagePublisher;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
 import com.example.api_nosql.persistence.entity.Match;
@@ -23,6 +24,7 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
     private final ChatService chatService;
+    private final RedisMessagePublisher redisMessagePublisher;
 
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
