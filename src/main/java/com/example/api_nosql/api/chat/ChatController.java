@@ -25,8 +25,8 @@ public class ChatController implements ChatApi {
     }
 
     @Override
-    public ResponseEntity<List<ChatResponse>> findAll() {
-        return ResponseEntity.ok(chatService.findAll());
+    public ResponseEntity<List<ChatResponse>> findAllByEmployeeId(Long id) {
+        return ResponseEntity.ok(chatService.findAllByEmployeeId(id));
     }
 
     @Override
@@ -35,17 +35,11 @@ public class ChatController implements ChatApi {
     }
 
     @Override
-    public ResponseEntity<ChatResponse> addMessage(
+    public ResponseEntity<ChatResponse> sendMessage(
             @PathVariable String id,
             @Valid @RequestBody MessageRequest request) {
 
-        return ResponseEntity.ok(chatService.addMessage(id, request));
-    }
-
-    @Override
-    public ResponseEntity<Void> deleteChat(@PathVariable String id) {
-        chatService.deleteChat(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(chatService.sendMessage(id, request));
     }
 
 }

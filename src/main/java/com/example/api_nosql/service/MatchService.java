@@ -47,10 +47,12 @@ public class MatchService {
         matchContext.next();
 
         if (matchContext.getState() == MatchState.ANDAMENTO) {
-            ChatResponse chat = chatService.createChat(new ChatRequestDto(match.getId().toString()));
+            ChatResponse chat = chatService.createChat(new ChatRequestDto(
+                    match.getId().toString(), List.of(match.getIdEmployeeSeller(), match.getIdEmployeePurchaser())));
             match.setIdChat(chat.getId());
             match.setIdEmployeeSeller(request.getIdEmployeeSeller());
             match.setIdIndustrySeller(request.getIdIndustrySeller());
+            redisMessagePublisher.publish("match." + match.getId().toString(), List.of(match.getIdEmployeeSeller(), match.getIdEmployeePurchaser()));
         }else if (matchContext.getState() == MatchState.AGUARDANDO_PAGAMENTO) {
             match.setProposedValue(request.getProposedValue());
             match.setQuantity(request.getQuantity());
