@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -15,4 +17,7 @@ public class ChatRequestDto {
 
     @NotBlank(message = "O id do match é obrigatório")
     private String idMatch;
+
+    @NotBlank(message = "A lista de participantes é obrigatório")
+    private List<Long> participants;
 }

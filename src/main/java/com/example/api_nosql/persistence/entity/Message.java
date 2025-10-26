@@ -12,11 +12,10 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class Message {
-    private String id;
-    private String idChat;
-    private String idEmployee;
+    private Long idEmployee;
     private String message;
-    private Instant createdAt;
+    @Builder.Default
+    private Instant createdAt = Instant.now();
     private boolean read = false;
 }
 

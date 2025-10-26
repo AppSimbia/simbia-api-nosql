@@ -10,7 +10,6 @@ import com.example.api_nosql.persistence.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +27,8 @@ public class ChatService {
         return toResponse(chatRepository.save(chat));
     }
 
-    public List<ChatResponse> findAll() {
-        return chatRepository.findAll().stream()
+    public List<ChatResponse> findAllByEmployeeId(Long id) {
+        return chatRepository.findAllByEmployeeId(id).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
@@ -40,14 +39,13 @@ public class ChatService {
         return toResponse(chat);
     }
 
-    public ChatResponse addMessage(String chatId, MessageRequest messageRequest) {
+    public ChatResponse sendMessage(String chatId, MessageRequest messageRequest) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado: " + chatId));
 
         Message message = Message.builder()
                 .idEmployee(messageRequest.getIdEmployee())
                 .message(messageRequest.getMessage())
-                .createdAt(Instant.now())
                 .build();
 
         chat.getMessages().add(message);
@@ -56,10 +54,6 @@ public class ChatService {
         redisMessagePublisher.publish("chat." + chatId, message);
 
         return toResponse(chat);
-    }
-
-    public void deleteChat(String id) {
-        chatRepository.deleteById(id);
     }
 
     private ChatResponse toResponse(Chat chat) {
