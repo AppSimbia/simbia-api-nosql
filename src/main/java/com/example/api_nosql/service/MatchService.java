@@ -29,14 +29,20 @@ public class MatchService {
 
         return list.stream()
                 .filter(match -> match.getStatus() != MatchState.CANCELADO && match.getStatus() != MatchState.CONCLUIDO)
-                .map(MatchService::fromMatch)
+                .map(this::fromMatch)
                 .collect(Collectors.toList());
+    }
+
+    public List<MatchResponse> findAllSolicitations(String cnpj){
+        List<Match> list = matchRepository.findAllSolicitations(cnpj);
+
+        return list.stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
     public List<MatchResponse> findBySellerId(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
 
-        return list.stream().map(MatchService::fromMatch).collect(Collectors.toList());
+        return list.stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
     public String changeStatus(final String id, MatchRequest request) {
@@ -77,7 +83,7 @@ public class MatchService {
         return fromMatch(matchRepository.save(match));
     }
 
-    private static MatchResponse fromMatch(final Match match){
+    private MatchResponse fromMatch(final Match match){
         return MatchMapper.toResponse(match);
     }
 

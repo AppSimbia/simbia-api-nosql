@@ -41,6 +41,11 @@ public class MatchController implements MatchApi {
     }
 
     @Override
+    public ResponseEntity<List<MatchResponse>> findAllMatchsSolicitations(String cnpj) {
+        return ResponseEntity.ok(matchService.findAllSolicitations(cnpj));
+    }
+
+    @Override
     public ResponseEntity<String> changeStatus(String chaId, String action, MatchRequest request) {
         if ("payment".equals(action)) {
             validator.validate(request, OnPayment.class);
