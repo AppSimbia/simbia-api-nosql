@@ -9,7 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -25,12 +28,13 @@ public interface ChatApi {
     ResponseEntity<ChatResponse> create(@Valid @RequestBody ChatRequestDto request);
 
 
-    @Operation(summary = "List all chats")
+    @Operation(summary = "List all chats by employee ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "List of chats successfully returned")
+            @ApiResponse(responseCode = "200", description = "List of chats successfully returned"),
+            @ApiResponse(responseCode = "404", description = "List of chats not found.")
     })
-    @GetMapping
-    ResponseEntity<List<ChatResponse>> findAll();
+    @GetMapping("/employee/{id}")
+    ResponseEntity<List<ChatResponse>> findAllByEmployeeId(@PathVariable("id") Long id);
 
 
     @Operation(summary = "Find a chat by ID")
@@ -42,24 +46,15 @@ public interface ChatApi {
     ResponseEntity<ChatResponse> findById(@PathVariable String id);
 
 
-    @Operation(summary = "Add a new message to a chat")
+    @Operation(summary = "Send a new message to a chat")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Message added successfully."),
             @ApiResponse(responseCode = "400", description = "Invalid data provided."),
             @ApiResponse(responseCode = "404", description = "Chat not found.")
     })
     @PostMapping("/{id}/messages")
-    ResponseEntity<ChatResponse> addMessage(
+    ResponseEntity<ChatResponse> sendMessage(
             @PathVariable String id,
             @Valid @RequestBody MessageRequest request);
-
-
-    @Operation(summary = "Delete a chat by ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Chat deleted successfully."),
-            @ApiResponse(responseCode = "404", description = "Chat not found.")
-    })
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteChat(@PathVariable String id);
 
 }
