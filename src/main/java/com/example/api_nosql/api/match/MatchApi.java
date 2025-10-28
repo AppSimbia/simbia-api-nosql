@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Nullable;
 import jakarta.validation.groups.Default;
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,13 @@ public interface MatchApi {
     })
     @GetMapping("/available/{id}")
     ResponseEntity<List<MatchResponse>> findBySellerIdAvailable(@PathVariable Long id);
+
+    @Operation(summary = "List all matchs solicitations by industry ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of matchs solicitations successfully returned")
+    })
+    @GetMapping("/solicitations/{cnpj}")
+    ResponseEntity<List<MatchResponse>> findAllMatchsSolicitations(@CNPJ @PathVariable("cnpj") String cnpj);
 
     @Operation(summary = "Change match status")
     @ApiResponses({
