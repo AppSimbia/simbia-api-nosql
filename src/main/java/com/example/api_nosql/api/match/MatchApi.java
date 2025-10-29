@@ -25,19 +25,12 @@ public interface MatchApi {
     @PostMapping
     ResponseEntity<MatchResponse> create(@Validated({OnCreate.class, Default.class}) @RequestBody MatchRequest request);
 
-    @Operation(summary = "List all matchs by seller ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")
-    })
-    @GetMapping("/{id}")
-    ResponseEntity<List<MatchResponse>> findBySellerId(@PathVariable Long id);
-
-    @Operation(summary = "List all matchs available by seller ID")
+    @Operation(summary = "List all matchs available by employee ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")
     })
     @GetMapping("/available/{id}")
-    ResponseEntity<List<MatchResponse>> findBySellerIdAvailable(@PathVariable Long id);
+    ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(@PathVariable Long id);
 
     @Operation(summary = "List all matchs solicitations by industry ID")
     @ApiResponses({
