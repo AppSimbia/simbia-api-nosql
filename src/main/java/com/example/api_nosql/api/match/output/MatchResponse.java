@@ -17,6 +17,7 @@ public class MatchResponse {
     private String idIndustryPurchaser;
     private String idIndustrySeller;
     private String idChat;
+    private String solicitationText;
     private Double proposedValue;
     private Long quantity;
     private Long measureUnit;
