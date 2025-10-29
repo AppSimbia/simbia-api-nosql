@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends MongoRepository<Chat, String> {
 
-    @Query("{ 'participants' :  ?0 }")
-    List<Chat> findAllByEmployeeId(Long id);
+    @Query("{ 'participants' : ?0 }")
+    List<Chat> findAllByEmployeeId(Long employeeId);
 
 }

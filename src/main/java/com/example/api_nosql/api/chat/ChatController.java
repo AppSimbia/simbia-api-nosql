@@ -1,6 +1,5 @@
 package com.example.api_nosql.api.chat;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.service.ChatService;
@@ -20,13 +19,8 @@ public class ChatController implements ChatApi {
     private final ChatService chatService;
 
     @Override
-    public ResponseEntity<ChatResponse> create(@Valid @RequestBody ChatRequestDto request) {
-        return ResponseEntity.ok(chatService.createChat(request));
-    }
-
-    @Override
-    public ResponseEntity<List<ChatResponse>> findAllByEmployeeId(Long id) {
-        return ResponseEntity.ok(chatService.findAllByEmployeeId(id));
+    public ResponseEntity<List<ChatResponse>> findAllByEmployee(Long idEmployee) {
+        return ResponseEntity.ok(chatService.findAllByEmployee(idEmployee));
     }
 
     @Override
@@ -35,11 +29,17 @@ public class ChatController implements ChatApi {
     }
 
     @Override
-    public ResponseEntity<ChatResponse> sendMessage(
+    public ResponseEntity<ChatResponse> addMessage(
             @PathVariable String id,
             @Valid @RequestBody MessageRequest request) {
 
-        return ResponseEntity.ok(chatService.sendMessage(id, request));
+        return ResponseEntity.ok(chatService.addMessage(id, request));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteChat(@PathVariable String id) {
+        chatService.deleteChat(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

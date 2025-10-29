@@ -1,10 +1,8 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
-import com.example.api_nosql.config.redis.RedisMessagePublisher;
 import com.example.api_nosql.exception.ExistingMatch;
 import com.example.api_nosql.mapper.MatchMapper;
 import com.example.api_nosql.persistence.entity.Match;
@@ -24,7 +22,6 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
     private final ChatService chatService;
-    private final RedisMessagePublisher redisMessagePublisher;
 
     public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
         List<Match> list = matchRepository.findByIdSeller(sellerId);
@@ -53,13 +50,11 @@ public class MatchService {
         matchContext.next();
 
         if (matchContext.getState() == MatchState.ANDAMENTO) {
-            ChatResponse chat = chatService.createChat(new ChatRequestDto(
-                    match.getId().toString(), List.of(match.getIdEmployeeSeller(), match.getIdEmployeePurchaser())));
+            ChatResponse chat = chatService.createChat(List.of(match.getIdEmployeePurchaser(), request.getIdEmployeeSeller()));
             match.setIdChat(chat.getId());
             match.setIdEmployeeSeller(request.getIdEmployeeSeller());
             match.setIdIndustrySeller(request.getIdIndustrySeller());
-            redisMessagePublisher.publish("match." + match.getId().toString(), List.of(match.getIdEmployeeSeller(), match.getIdEmployeePurchaser()));
-        }else if (matchContext.getState() == MatchState.AGUARDANDO_PAGAMENTO) {
+        }else if (matchContext.getState() == MatchState.AGUARDANDO_APROVACAO_FECHAMENTO) {
             match.setProposedValue(request.getProposedValue());
             match.setQuantity(request.getQuantity());
             match.setMeasureUnit(request.getMeasureUnit());
