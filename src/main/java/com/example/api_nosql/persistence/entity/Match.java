@@ -26,6 +26,7 @@ public class Match {
     private Long idEmployeeSeller;
     private String idIndustryPurchaser;
     private String idIndustrySeller;
+    private String solicitationText;
     private Double proposedValue;
     private Long quantity;
     private Long measureUnit;

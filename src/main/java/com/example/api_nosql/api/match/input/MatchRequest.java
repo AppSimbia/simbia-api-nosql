@@ -35,6 +35,11 @@ public class MatchRequest {
     @CNPJ(groups = OnUpdate.class)
     private String idIndustrySeller;
 
+    @Schema(example = "Texto", description = "Text of the solicitation")
+    @NotNull(message = "A Solicição deve ter um texto de justificativa", groups = {OnCreate.class})
+    @CNPJ(groups = OnCreate.class)
+    private String solicitationText;
+
     @Schema(example = "123.5", description = "Proposed closing value")
     @NotNull(message = "O valor proposto não pode ser NULL", groups = {OnPayment.class})
     private Double proposedValue;
