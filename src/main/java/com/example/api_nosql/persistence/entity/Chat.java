@@ -15,10 +15,8 @@ public class Chat {
     @Id
     private String id;
 
-    private String idMatch;
-
     @Builder.Default
-    private List<String> participants = new ArrayList<>();
+    private List<Long> participants = new ArrayList<>();
 
     @Builder.Default
     private List<Message> messages = new ArrayList<>();

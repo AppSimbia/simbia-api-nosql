@@ -1,6 +1,5 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.api.match.input.MatchRequest;
 import com.example.api_nosql.api.match.output.MatchResponse;
@@ -51,11 +50,11 @@ public class MatchService {
         matchContext.next();
 
         if (matchContext.getState() == MatchState.ANDAMENTO) {
-            ChatResponse chat = chatService.createChat(new ChatRequestDto(match.getId().toString()));
+            ChatResponse chat = chatService.createChat(List.of(match.getIdEmployeePurchaser(), request.getIdEmployeeSeller()));
             match.setIdChat(chat.getId());
             match.setIdEmployeeSeller(request.getIdEmployeeSeller());
             match.setIdIndustrySeller(request.getIdIndustrySeller());
-        }else if (matchContext.getState() == MatchState.AGUARDANDO_PAGAMENTO) {
+        }else if (matchContext.getState() == MatchState.AGUARDANDO_APROVACAO_FECHAMENTO) {
             match.setProposedValue(request.getProposedValue());
             match.setQuantity(request.getQuantity());
             match.setMeasureUnit(request.getMeasureUnit());

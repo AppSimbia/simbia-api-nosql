@@ -12,7 +12,7 @@ public interface MatchRepository extends MongoRepository<Match, ObjectId> {
     @Query("{ 'idSeller' :  ?0 }")
     List<Match> findByIdSeller(Long sellerId);
 
-    @Query("{ 'idIndustrySeller' : ?0, 'status' :  { $nin :  ['CANCELADO', 'CONCLUIDO'] }}")
+    @Query("{ $or: [{'idIndustryPurchaser' : ?0}, {'idIndustrySeller' :  ?0}], 'status' :  { $nin :  ['CANCELADO', 'CONCLUIDO', 'ANDAMENTO', 'AGUARDANDO_PAGAMENTO'] }}")
     List<Match> findAllSolicitations(String idIndustrySeller);
 
     @Query(value = "{ 'idIndustryPurchaser' : ?0, 'idPost' : ?1, 'status' :  { $ne :  ?2 }}", exists = true)

@@ -1,6 +1,5 @@
 package com.example.api_nosql.service;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.config.redis.RedisMessagePublisher;
@@ -21,15 +20,13 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final RedisMessagePublisher redisMessagePublisher;
 
-    public ChatResponse createChat(ChatRequestDto dto) {
-        Chat chat = Chat.builder()
-                .idMatch(dto.getIdMatch())
-                .build();
+    public ChatResponse createChat(List<Long> participants) {
+        Chat chat = Chat.builder().participants(participants).build();
         return toResponse(chatRepository.save(chat));
     }
 
-    public List<ChatResponse> findAll() {
-        return chatRepository.findAll().stream()
+    public List<ChatResponse> findAllByEmployee(Long idEmployee) {
+        return chatRepository.findAllByEmployeeId(idEmployee).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
@@ -65,7 +62,7 @@ public class ChatService {
     private ChatResponse toResponse(Chat chat) {
         return ChatResponse.builder()
                 .id(chat.getId())
-                .idMatch(chat.getIdMatch())
+                .participants(chat.getParticipants())
                 .messages(chat.getMessages())
                 .build();
     }

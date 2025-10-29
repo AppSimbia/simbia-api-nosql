@@ -1,6 +1,5 @@
 package com.example.api_nosql.api.chat;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import com.example.api_nosql.service.ChatService;
@@ -20,13 +19,8 @@ public class ChatController implements ChatApi {
     private final ChatService chatService;
 
     @Override
-    public ResponseEntity<ChatResponse> create(@Valid @RequestBody ChatRequestDto request) {
-        return ResponseEntity.ok(chatService.createChat(request));
-    }
-
-    @Override
-    public ResponseEntity<List<ChatResponse>> findAll() {
-        return ResponseEntity.ok(chatService.findAll());
+    public ResponseEntity<List<ChatResponse>> findAllByEmployee(Long idEmployee) {
+        return ResponseEntity.ok(chatService.findAllByEmployee(idEmployee));
     }
 
     @Override

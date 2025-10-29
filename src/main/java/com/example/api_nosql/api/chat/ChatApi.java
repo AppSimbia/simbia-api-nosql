@@ -1,6 +1,5 @@
 package com.example.api_nosql.api.chat;
 
-import com.example.api_nosql.api.chat.input.ChatRequestDto;
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,21 +15,12 @@ import java.util.List;
 @RequestMapping("/chats")
 public interface ChatApi {
 
-    @Operation(summary = "Create a new chat")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Chat created successfully."),
-            @ApiResponse(responseCode = "400", description = "Invalid data provided.")
-    })
-    @PostMapping
-    ResponseEntity<ChatResponse> create(@Valid @RequestBody ChatRequestDto request);
-
-
-    @Operation(summary = "List all chats")
+    @Operation(summary = "List all chats by employee id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "List of chats successfully returned")
     })
-    @GetMapping
-    ResponseEntity<List<ChatResponse>> findAll();
+    @GetMapping("/list/{id}")
+    ResponseEntity<List<ChatResponse>> findAllByEmployee(@PathVariable("id") Long idEmployee);
 
 
     @Operation(summary = "Find a chat by ID")
