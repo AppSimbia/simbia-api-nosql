@@ -31,8 +31,8 @@ public class MatchRequest {
     private String idIndustryPurchaser;
 
     @Schema(example = "12345678901234", description = "CNPJ of the associated industry seller")
-    @NotNull(message = "O ID da Indústria Vendedora não pode ser NULL", groups = {OnUpdate.class})
-    @CNPJ(groups = OnUpdate.class)
+    @NotNull(message = "O ID da Indústria Vendedora não pode ser NULL", groups = {OnCreate.class})
+    @CNPJ(groups = OnCreate.class)
     private String idIndustrySeller;
 
     @Schema(example = "Texto", description = "Text of the solicitation")
