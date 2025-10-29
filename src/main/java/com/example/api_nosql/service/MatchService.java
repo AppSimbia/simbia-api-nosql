@@ -23,23 +23,12 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final ChatService chatService;
 
-    public List<MatchResponse> findBySellerIdAvailable(final Long sellerId){
-        List<Match> list = matchRepository.findByIdSeller(sellerId);
-
-        return list.stream()
-                .filter(match -> match.getStatus() != MatchState.CANCELADO && match.getStatus() != MatchState.CONCLUIDO)
-                .map(this::fromMatch)
-                .collect(Collectors.toList());
+    public List<MatchResponse> findByEmployeeIdAvailable(final Long employeeId){
+        return matchRepository.findAllByEmployeeId(employeeId).stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
     public List<MatchResponse> findAllSolicitations(String cnpj){
         List<Match> list = matchRepository.findAllSolicitations(cnpj);
-
-        return list.stream().map(this::fromMatch).collect(Collectors.toList());
-    }
-
-    public List<MatchResponse> findBySellerId(final Long sellerId){
-        List<Match> list = matchRepository.findByIdSeller(sellerId);
 
         return list.stream().map(this::fromMatch).collect(Collectors.toList());
     }
