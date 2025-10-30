@@ -27,7 +27,7 @@ public class MatchController implements MatchApi {
     }
 
     @Override
-    public ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(Long id) {
+    public ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(String id) {
         List<MatchResponse> list = matchService.findByEmployeeIdAvailable(id);
 
         return list.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(list);

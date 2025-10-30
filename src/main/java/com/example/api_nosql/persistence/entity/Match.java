@@ -22,8 +22,8 @@ public class Match {
     @Builder.Default
     private ObjectId id =  new ObjectId();
     private Long idPost;
-    private Long idEmployeePurchaser;
-    private Long idEmployeeSeller;
+    private String uidEmployeePurchaser;
+    private String uidEmployeeSeller;
     private String idIndustryPurchaser;
     private String idIndustrySeller;
     private String solicitationText;

@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface MatchRepository extends MongoRepository<Match, ObjectId> {
 
-    @Query("{ $or: [{'idEmployeeSeller' :  ?0 }, {'idEmployeePurchaser' :  ?0 }] }")
-    List<Match> findAllByEmployeeId(Long sellerId);
+    @Query("{ $or: [{'uidEmployeeSeller' :  ?0 }, {'uidEmployeePurchaser' :  ?0 }] }")
+    List<Match> findAllByEmployeeId(String sellerId);
 
     @Query("{ 'idIndustrySeller' :  ?0, 'status' :  { $nin :  ['CANCELADO', 'CONCLUIDO', 'ANDAMENTO', 'AGUARDANDO_PAGAMENTO'] }}")
     List<Match> findAllSolicitations(String idIndustrySeller);

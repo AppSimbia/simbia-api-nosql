@@ -23,7 +23,7 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final ChatService chatService;
 
-    public List<MatchResponse> findByEmployeeIdAvailable(final Long employeeId){
+    public List<MatchResponse> findByEmployeeIdAvailable(final String employeeId){
         return matchRepository.findAllByEmployeeId(employeeId).stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
@@ -39,10 +39,9 @@ public class MatchService {
         matchContext.next();
 
         if (matchContext.getState() == MatchState.ANDAMENTO) {
-            ChatResponse chat = chatService.createChat(List.of(match.getIdEmployeePurchaser(), request.getIdEmployeeSeller()));
+            ChatResponse chat = chatService.createChat(List.of(match.getUidEmployeePurchaser(), request.getUidEmployeeSeller()));
             match.setIdChat(chat.getId());
-            match.setIdEmployeeSeller(request.getIdEmployeeSeller());
-            match.setIdIndustrySeller(request.getIdIndustrySeller());
+            match.setUidEmployeeSeller(request.getUidEmployeeSeller());
         }else if (matchContext.getState() == MatchState.AGUARDANDO_APROVACAO_FECHAMENTO) {
             match.setProposedValue(request.getProposedValue());
             match.setQuantity(request.getQuantity());

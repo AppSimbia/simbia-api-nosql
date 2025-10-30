@@ -30,7 +30,7 @@ public interface MatchApi {
             @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")
     })
     @GetMapping("/available/{id}")
-    ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(@PathVariable Long id);
+    ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(@PathVariable String id);
 
     @Operation(summary = "List all matchs solicitations by industry ID")
     @ApiResponses({

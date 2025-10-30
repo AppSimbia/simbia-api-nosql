@@ -20,12 +20,12 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final RedisMessagePublisher redisMessagePublisher;
 
-    public ChatResponse createChat(List<Long> participants) {
+    public ChatResponse createChat(List<String> participants) {
         Chat chat = Chat.builder().participants(participants).build();
         return toResponse(chatRepository.save(chat));
     }
 
-    public List<ChatResponse> findAllByEmployee(Long idEmployee) {
+    public List<ChatResponse> findAllByEmployee(String idEmployee) {
         return chatRepository.findAllByEmployeeId(idEmployee).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
