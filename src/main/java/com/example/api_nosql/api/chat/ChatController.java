@@ -19,7 +19,7 @@ public class ChatController implements ChatApi {
     private final ChatService chatService;
 
     @Override
-    public ResponseEntity<List<ChatResponse>> findAllByEmployee(Long idEmployee) {
+    public ResponseEntity<List<ChatResponse>> findAllByEmployee(String idEmployee) {
         return ResponseEntity.ok(chatService.findAllByEmployee(idEmployee));
     }
 
