@@ -37,7 +37,6 @@ public class MatchRequest {
 
     @Schema(example = "Texto", description = "Text of the solicitation")
     @NotNull(message = "A Solicição deve ter um texto de justificativa", groups = {OnCreate.class})
-    @CNPJ(groups = OnCreate.class)
     private String solicitationText;
 
     @Schema(example = "123.5", description = "Proposed closing value")
