@@ -20,7 +20,7 @@ public interface ChatApi {
             @ApiResponse(responseCode = "200", description = "List of chats successfully returned")
     })
     @GetMapping("/list/{id}")
-    ResponseEntity<List<ChatResponse>> findAllByEmployee(@PathVariable("id") Long idEmployee);
+    ResponseEntity<List<ChatResponse>> findAllByEmployee(@PathVariable("id") String idEmployee);
 
 
     @Operation(summary = "Find a chat by ID")

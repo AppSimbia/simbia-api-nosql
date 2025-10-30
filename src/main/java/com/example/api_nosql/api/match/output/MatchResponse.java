@@ -12,8 +12,8 @@ public class MatchResponse {
 
     private String id;
     private Long idPost;
-    private Long idEmployeePurchaser;
-    private Long idEmployeeSeller;
+    private String uidEmployeePurchaser;
+    private String uidEmployeeSeller;
     private String idIndustryPurchaser;
     private String idIndustrySeller;
     private String idChat;

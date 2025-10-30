@@ -11,6 +11,6 @@ import java.util.List;
 public interface ChatRepository extends MongoRepository<Chat, String> {
 
     @Query("{ 'participants' : ?0 }")
-    List<Chat> findAllByEmployeeId(Long employeeId);
+    List<Chat> findAllByEmployeeId(String employeeId);
 
 }

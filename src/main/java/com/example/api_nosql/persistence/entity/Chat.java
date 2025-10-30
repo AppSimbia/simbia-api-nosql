@@ -15,8 +15,7 @@ public class Chat {
     @Id
     private String id;
 
-    @Builder.Default
-    private List<Long> participants = new ArrayList<>();
+    private List<String> participants;
 
     @Builder.Default
     private List<Message> messages = new ArrayList<>();

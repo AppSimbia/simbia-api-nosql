@@ -18,12 +18,12 @@ public class MatchRequest {
     private Long idPost;
 
     @Schema(example = "1", description = "ID of the associated employee purchaser")
-    @NotNull(message = "O ID do Funcionário Comprador não pode ser NULL", groups = {OnCreate.class})
-    private Long idEmployeePurchaser;
+    @NotNull(message = "O UID do Funcionário Comprador não pode ser NULL", groups = {OnCreate.class})
+    private String uidEmployeePurchaser;
 
     @Schema(example = "1", description = "ID of the associated employee seller")
-    @NotNull(message = "O ID do Funcionário Vendedor não pode ser NULL", groups = {OnUpdate.class})
-    private Long idEmployeeSeller;
+    @NotNull(message = "O UID do Funcionário Vendedor não pode ser NULL", groups = {OnUpdate.class})
+    private String uidEmployeeSeller;
 
     @Schema(example = "12345678901234", description = "CNPJ of the associated industry purchaser")
     @NotNull(message = "O ID da Indústria Compradora não pode ser NULL", groups = {OnCreate.class})
