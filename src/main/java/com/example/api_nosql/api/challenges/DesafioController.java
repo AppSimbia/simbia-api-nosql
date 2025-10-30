@@ -29,6 +29,11 @@ public class DesafioController implements DesafioApi {
     }
 
     @Override
+    public ResponseEntity<List<DesafioResponse>> findAll() {
+        return ResponseEntity.ok(desafioService.findAll());
+    }
+
+    @Override
     public ResponseEntity<DesafioResponse> createSolution(SolucaoRequest request, String idDesafio) {
         return ResponseEntity.ok(desafioService.createSolucao(request,idDesafio));
     }

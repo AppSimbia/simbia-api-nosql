@@ -31,6 +31,13 @@ public interface DesafioApi {
     @GetMapping("/{id}")
     ResponseEntity<List<DesafioResponse>> findByEmployeeId(@PathVariable Long id);
 
+    @Operation(summary = "List all challenges")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of challenges successfully returned")
+    })
+    @GetMapping("/list")
+    ResponseEntity<List<DesafioResponse>> findAll();
+
     @Operation(summary = "Create a new solution")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Solution successfully created"),

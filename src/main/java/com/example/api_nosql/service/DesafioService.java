@@ -26,6 +26,11 @@ public class DesafioService {
         return list.stream().map(DesafioService::fromDesafio).collect(Collectors.toList());
     }
 
+    public List<DesafioResponse> findAll() {
+        List<Desafio> list = repository.findAll();
+        return list.stream().map(DesafioService::fromDesafio).collect(Collectors.toList());
+    }
+
     public DesafioResponse create(final DesafioRequest request) {
         Desafio desafio = toDesafio(request);
         return fromDesafio(repository.save(desafio));
