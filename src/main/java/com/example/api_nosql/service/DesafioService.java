@@ -21,9 +21,8 @@ public class DesafioService {
     private final DesafioRepository repository;
     private final RedisMessagePublisher redisMessagePublisher;
 
-    public List<DesafioResponse> findByEmployeeId(final Long id) {
-        List<Desafio> list = repository.findByIdEmployeeQuestion(id);
-        return list.stream().map(DesafioService::fromDesafio).collect(Collectors.toList());
+    public DesafioResponse findById(final String id) {
+        return fromDesafio(repository.findById(new ObjectId(id)).orElse(null));
     }
 
     public List<DesafioResponse> findAll() {
@@ -44,6 +43,7 @@ public class DesafioService {
     }
 
     private static DesafioResponse fromDesafio(final Desafio desafio){
+        if (desafio == null) return null;
         return DesafioMapper.toResponse(desafio);
     }
 

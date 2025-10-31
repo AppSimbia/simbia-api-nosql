@@ -22,10 +22,10 @@ public class DesafioController implements DesafioApi {
     }
 
     @Override
-    public ResponseEntity<List<DesafioResponse>> findByEmployeeId(Long id) {
-        List<DesafioResponse> list = desafioService.findByEmployeeId(id);
+    public ResponseEntity<DesafioResponse> findById(String id) {
+        DesafioResponse desafio = desafioService.findById(id);
 
-        return list.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(list);
+        return desafio == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(desafio);
     }
 
     @Override
