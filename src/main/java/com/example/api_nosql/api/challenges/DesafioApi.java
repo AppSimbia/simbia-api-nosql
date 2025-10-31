@@ -24,12 +24,12 @@ public interface DesafioApi {
     @PostMapping
     ResponseEntity<DesafioResponse> create(@Valid @RequestBody DesafioRequest request);
 
-    @Operation(summary = "List all challenges by employee ID")
+    @Operation(summary = "Get challenge by ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "List of challenges successfully returned")
+            @ApiResponse(responseCode = "200", description = "Get challenge successfully returned")
     })
     @GetMapping("/{id}")
-    ResponseEntity<List<DesafioResponse>> findByEmployeeId(@PathVariable Long id);
+    ResponseEntity<DesafioResponse> findById(@PathVariable String id);
 
     @Operation(summary = "List all challenges")
     @ApiResponses({
