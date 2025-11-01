@@ -2,11 +2,11 @@ package com.example.api_nosql.service;
 
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
-import com.example.api_nosql.config.redis.RedisMessagePublisher;
 import com.example.api_nosql.persistence.entity.Chat;
 import com.example.api_nosql.persistence.entity.Message;
 import com.example.api_nosql.persistence.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ChatService {
 
     private final ChatRepository chatRepository;
-    private final RedisMessagePublisher redisMessagePublisher;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public ChatResponse createChat(List<String> participants) {
         Chat chat = Chat.builder().participants(participants).build();
@@ -49,9 +49,6 @@ public class ChatService {
 
         chat.getMessages().add(message);
         chatRepository.save(chat);
-
-        redisMessagePublisher.publish("chat." + chatId, message);
-
         return toResponse(chat);
     }
 

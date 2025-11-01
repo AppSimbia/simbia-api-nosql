@@ -3,7 +3,7 @@ package com.example.api_nosql.service;
 import com.example.api_nosql.api.challenges.input.DesafioRequest;
 import com.example.api_nosql.api.challenges.input.SolucaoRequest;
 import com.example.api_nosql.api.challenges.output.DesafioResponse;
-import com.example.api_nosql.config.redis.RedisMessagePublisher;
+
 import com.example.api_nosql.mapper.DesafioMapper;
 import com.example.api_nosql.persistence.entity.Desafio;
 import com.example.api_nosql.persistence.repository.DesafioRepository;
@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class DesafioService {
 
     private final DesafioRepository repository;
-    private final RedisMessagePublisher redisMessagePublisher;
 
     public DesafioResponse findById(final String id) {
         return fromDesafio(repository.findById(new ObjectId(id)).orElse(null));
@@ -38,7 +37,6 @@ public class DesafioService {
     public DesafioResponse createSolucao(final SolucaoRequest solucaoRequest, final String idDesafio) {
         Desafio desafio = repository.findById(new ObjectId(idDesafio)).orElseThrow(() -> new RuntimeException("Desafio not found"));
         desafio.getSolutions().addLast(toSolucao(solucaoRequest));
-        redisMessagePublisher.publish("desafio." + idDesafio, toSolucao(solucaoRequest));
         return fromDesafio(repository.save(desafio));
     }
 
