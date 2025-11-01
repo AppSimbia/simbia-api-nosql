@@ -28,6 +28,7 @@ public class ChatService {
     public List<ChatResponse> findAllByEmployee(String idEmployee) {
         return chatRepository.findAllByEmployeeId(idEmployee).stream()
                 .map(this::toResponse)
+                .sorted()
                 .collect(Collectors.toList());
     }
 
