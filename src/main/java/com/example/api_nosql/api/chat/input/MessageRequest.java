@@ -13,12 +13,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MessageRequest {
 
-//    @NotBlank(message = "A mensagem não pode ser vazia")
+    @NotBlank(message = "A mensagem não pode ser vazia")
     private String message;
 
-//    @NotNull(message = "O id do funcionário é obrigatório")
+    @NotNull(message = "O id do funcionário é obrigatório")
     private Long idEmployee;
 
     private String idChat;
+
+    private Boolean isSpecialMessage;
 
 }
