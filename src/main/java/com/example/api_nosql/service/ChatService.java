@@ -6,8 +6,6 @@ import com.example.api_nosql.persistence.entity.Chat;
 import com.example.api_nosql.persistence.entity.Message;
 import com.example.api_nosql.persistence.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 public class ChatService {
 
     private final ChatRepository chatRepository;
-    private final SimpMessagingTemplate messagingTemplate;
 
     public ChatResponse createChat(List<String> participants) {
         Chat chat = Chat.builder().participants(participants).build();
@@ -39,7 +36,7 @@ public class ChatService {
         return toResponse(chat);
     }
 
-    public ChatResponse addMessage(String chatId, MessageRequest messageRequest) {
+    public Message addMessage(String chatId, MessageRequest messageRequest) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado: " + chatId));
 
@@ -51,7 +48,7 @@ public class ChatService {
 
         chat.getMessages().add(message);
         chatRepository.save(chat);
-        return toResponse(chat);
+        return message;
     }
 
     public boolean readMessage(String id, Long idEmployee, Instant createdAt) {
