@@ -27,6 +27,10 @@ public class MatchService {
         return matchRepository.findAllByEmployeeId(employeeId).stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
+    public List<MatchResponse> findByEmployeeIdCompleted(final String employeeId){
+        return matchRepository.findAllByEmployeeIdCompleted(employeeId).stream().map(this::fromMatch).collect(Collectors.toList());
+    }
+
     public MatchResponse findByChatId(final String id){
         return fromMatch(matchRepository.findByIdChat(id));
     }
