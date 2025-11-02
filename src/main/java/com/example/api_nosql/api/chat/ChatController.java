@@ -2,13 +2,12 @@ package com.example.api_nosql.api.chat;
 
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
+import com.example.api_nosql.persistence.entity.Message;
 import com.example.api_nosql.service.ChatService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,12 +32,12 @@ public class ChatController implements ChatApi {
     }
 
     @Override
-    public ResponseEntity<ChatResponse> addMessage(
+    public ResponseEntity<Message> addMessage(
             String id,
             @Valid @RequestBody MessageRequest request) {
 
-        ChatResponse response = chatService.addMessage(id, request);
-        template.convertAndSend("/topic/chat." + id, request);
+        Message response = chatService.addMessage(id, request);
+        template.convertAndSend("/topic/chat." + id, response);
         return ResponseEntity.ok(response);
     }
 

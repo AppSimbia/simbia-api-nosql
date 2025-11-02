@@ -2,6 +2,7 @@ package com.example.api_nosql.api.chat;
 
 import com.example.api_nosql.api.chat.input.MessageRequest;
 import com.example.api_nosql.api.chat.output.ChatResponse;
+import com.example.api_nosql.persistence.entity.Message;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,7 +40,7 @@ public interface ChatApi {
             @ApiResponse(responseCode = "404", description = "Chat not found.")
     })
     @PostMapping("/{id}/messages")
-    ResponseEntity<ChatResponse> addMessage(
+    ResponseEntity<Message> addMessage(
             @PathVariable String id,
             @Valid @RequestBody MessageRequest request);
 
