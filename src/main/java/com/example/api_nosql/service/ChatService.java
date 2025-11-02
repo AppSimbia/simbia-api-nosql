@@ -6,6 +6,7 @@ import com.example.api_nosql.persistence.entity.Chat;
 import com.example.api_nosql.persistence.entity.Message;
 import com.example.api_nosql.persistence.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,22 @@ public class ChatService {
         chat.getMessages().add(message);
         chatRepository.save(chat);
         return toResponse(chat);
+    }
+
+    public boolean readMessage(String id, Long idEmployee, Instant createdAt) {
+        Chat chat = chatRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Chat não encontrado: " + id));
+
+        for (int i = chat.getMessages().size()-1; i >= 0; i--) {
+            Message message = chat.getMessages().get(i);
+
+            if (message.getIdEmployee().equals(idEmployee) && message.getCreatedAt().equals(createdAt)) {
+                message.setRead(true);
+                break;
+            }
+        }
+        chatRepository.save(chat);
+        return true;
     }
 
     public void deleteChat(String id) {
