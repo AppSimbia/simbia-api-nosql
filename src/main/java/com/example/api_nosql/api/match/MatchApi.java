@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/match")
 public interface MatchApi {
 
     @Operation(summary = "Create a new match")
@@ -31,6 +32,13 @@ public interface MatchApi {
     })
     @GetMapping("/available/{id}")
     ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(@PathVariable String id);
+
+    @Operation(summary = "List all matchs by chat ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")
+    })
+    @GetMapping("/chat/{id}")
+    ResponseEntity<MatchResponse> findByChatId(@PathVariable String id);
 
     @Operation(summary = "List all matchs solicitations by industry ID")
     @ApiResponses({

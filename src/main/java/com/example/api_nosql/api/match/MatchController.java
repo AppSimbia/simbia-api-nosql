@@ -5,16 +5,14 @@ import com.example.api_nosql.api.match.output.MatchResponse;
 import com.example.api_nosql.service.MatchService;
 import com.example.api_nosql.validation.OnPayment;
 import com.example.api_nosql.validation.OnUpdate;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Validator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/match")
 @RequiredArgsConstructor
 public class MatchController implements MatchApi {
 
@@ -31,6 +29,11 @@ public class MatchController implements MatchApi {
         List<MatchResponse> list = matchService.findByEmployeeIdAvailable(id);
 
         return list.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(list);
+    }
+
+    @Override
+    public ResponseEntity<MatchResponse> findByChatId(String id) {
+        return ResponseEntity.ok(matchService.findByChatId(id));
     }
 
     @Override
