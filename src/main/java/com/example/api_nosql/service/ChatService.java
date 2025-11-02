@@ -54,17 +54,22 @@ public class ChatService {
     public boolean readMessage(String id, Long idEmployee, Instant createdAt) {
         Chat chat = chatRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado: " + id));
+        int count = 0;
 
         for (int i = chat.getMessages().size()-1; i >= 0; i--) {
             Message message = chat.getMessages().get(i);
 
             if (message.getIdEmployee().equals(idEmployee) && message.getCreatedAt().compareTo(createdAt) == 0) {
                 message.setRead(true);
+                count++;
                 break;
             }
         }
-        chatRepository.save(chat);
-        return true;
+        if (count>0) {
+            chatRepository.save(chat);
+            return true;
+        }
+        return false;
     }
 
     public void deleteChat(String id) {
