@@ -58,7 +58,7 @@ public class ChatService {
         for (int i = chat.getMessages().size()-1; i >= 0; i--) {
             Message message = chat.getMessages().get(i);
 
-            if (message.getIdEmployee().equals(idEmployee) && message.getCreatedAt().equals(createdAt)) {
+            if (message.getIdEmployee().equals(idEmployee) && message.getCreatedAt().compareTo(createdAt) == 0) {
                 message.setRead(true);
                 break;
             }
