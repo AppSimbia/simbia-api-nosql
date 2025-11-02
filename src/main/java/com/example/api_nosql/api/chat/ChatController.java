@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,11 @@ public class ChatController implements ChatApi {
         ChatResponse response = chatService.addMessage(id, request);
         template.convertAndSend("/topic/chat." + id, request);
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Boolean> readMessage(String id, Long idEmployee, String createAt) {
+        return ResponseEntity.ok(chatService.readMessage(id, idEmployee, Instant.parse(createAt)));
     }
 
     @Override

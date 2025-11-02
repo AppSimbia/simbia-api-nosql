@@ -43,6 +43,18 @@ public interface ChatApi {
             @PathVariable String id,
             @Valid @RequestBody MessageRequest request);
 
+    @Operation(summary = "Read message to a chat")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Message added successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided."),
+            @ApiResponse(responseCode = "404", description = "Chat not found.")
+    })
+    @PutMapping("/{id}/messages")
+    ResponseEntity<Boolean> readMessage(
+            @PathVariable String id,
+            @RequestParam("employee") Long idEmployee,
+            @RequestParam("createAt") String createAt);
+
 
     @Operation(summary = "Delete a chat by ID")
     @ApiResponses({
