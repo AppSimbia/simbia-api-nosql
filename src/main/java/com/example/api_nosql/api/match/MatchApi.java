@@ -33,6 +33,13 @@ public interface MatchApi {
     @GetMapping("/available/{id}")
     ResponseEntity<List<MatchResponse>> findByEmployeeIdAvailable(@PathVariable String id);
 
+    @Operation(summary = "List all matchs completed by employee ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")
+    })
+    @GetMapping("/completed/{id}")
+    ResponseEntity<List<MatchResponse>> findByEmployeeIdCompleted(@PathVariable String id);
+
     @Operation(summary = "List all matchs by chat ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "List of matchs successfully returned")

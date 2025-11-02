@@ -32,6 +32,13 @@ public class MatchController implements MatchApi {
     }
 
     @Override
+    public ResponseEntity<List<MatchResponse>> findByEmployeeIdCompleted(String id) {
+        List<MatchResponse> list = matchService.findByEmployeeIdCompleted(id);
+
+        return list.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(list);
+    }
+
+    @Override
     public ResponseEntity<MatchResponse> findByChatId(String id) {
         return ResponseEntity.ok(matchService.findByChatId(id));
     }
