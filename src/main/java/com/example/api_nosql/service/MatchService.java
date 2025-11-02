@@ -27,6 +27,10 @@ public class MatchService {
         return matchRepository.findAllByEmployeeId(employeeId).stream().map(this::fromMatch).collect(Collectors.toList());
     }
 
+    public MatchResponse findByChatId(final String id){
+        return fromMatch(matchRepository.findByIdChat(id));
+    }
+
     public List<MatchResponse> findAllSolicitations(String cnpj){
         List<Match> list = matchRepository.findAllSolicitations(cnpj);
 

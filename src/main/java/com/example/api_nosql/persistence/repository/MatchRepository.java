@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface MatchRepository extends MongoRepository<Match, ObjectId> {
 
+    Match findByIdChat(String idChat);
+
     @Query("{ $or: [{'uidEmployeeSeller' :  ?0 }, {'uidEmployeePurchaser' :  ?0 }] }")
     List<Match> findAllByEmployeeId(String sellerId);
 
