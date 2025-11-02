@@ -16,6 +16,9 @@ public class Message {
     private String message;
     @Builder.Default
     private Instant createdAt = Instant.now();
+    @Builder.Default
     private boolean read = false;
+    @Builder.Default
+    private boolean isSpecialMessage = false;
 }
 

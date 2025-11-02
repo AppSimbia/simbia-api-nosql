@@ -43,7 +43,8 @@ public class ChatService {
         Message message = Message.builder()
                 .idEmployee(messageRequest.getIdEmployee())
                 .message(messageRequest.getMessage())
-                .createdAt(Instant.now())
+                .isSpecialMessage(messageRequest.getIsSpecialMessage() != null ?
+                        messageRequest.getIsSpecialMessage() : false)
                 .build();
 
         chat.getMessages().add(message);
